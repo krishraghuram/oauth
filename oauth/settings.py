@@ -132,3 +132,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'core.User'
+AUTHENTICATION_BACKENDS = [
+    'core.auth.WebmailAuthenticationBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
+]
+
