@@ -23,7 +23,7 @@ class WebmailAuthenticationBackend(object):
         except user_model.DoesNotExist:
             return None
 
-    def authenticate(self, **credentials):
+    def authenticate(self, request, **credentials):
         """
         Returns user for credentials provided if credentials are valid.
         Returns ``None`` otherwise.
