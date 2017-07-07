@@ -1,0 +1,14 @@
+{% extends "testoauth/base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block js %}{% endblock %}
+
+{% block content %}
+	<form method="POST" class="viewform card card-content">{% csrf_token %}
+		{{ form }}
+    	<button type="submit" name="_submit" class="btn btn-primary btn-lg">Submit</button>
+	</form>	
+{% endblock %}
