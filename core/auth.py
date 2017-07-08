@@ -1,4 +1,5 @@
 import poplib
+import socket
 from django.conf import settings
 from django.contrib.auth import get_user_model
 import django.core.exceptions
@@ -30,6 +31,7 @@ class WebmailAuthenticationBackend(object):
         :param credentials: keyword arguments
         :return: user object
         """
+        socket.setdefaulttimeout(5)
         webmail = credentials.get('webmail').split('@')[0]
         password = credentials.get('password')
         mail_server = credentials.get('mail_server')
@@ -63,6 +65,14 @@ class WebmailAuthenticationBackend(object):
             print "There are multiple reasons for this error. Check Poplib documentation for details."
             print "\n"
             raise #Re-Raise the exception
+        except socket.error as e:
+            s = e.message
+            if e.message=="timed out":
+                s = "Socket Timed Out."
+            print  "\n"
+            print s
+            print "\n"
+            raise #Re-Raise exception
         except (ValueError, TypeError) as e:
             raise e
 

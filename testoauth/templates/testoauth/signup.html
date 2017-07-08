@@ -2,7 +2,7 @@
 
 {% load material_form %} 
 
-{% block title %}Login{% endblock %}
+{% block title %}Signup{% endblock %}
 
 {% block css %}{% endblock %}
 
@@ -16,11 +16,11 @@
 	<div class="container expand-on-small-only">
 	<div class="row valign change-form">
     <div class="col s12 m10 offset-m1 l10 offset-l1">
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <div class="card">
 		<form method="POST" class="viewform">
 			<div class="card-content">
-				<span class="card-title grey-text text-darken-2">Login Form</span>
+				<span class="card-title grey-text text-darken-2">Signup Form</span>
 				<span class="card-content">
 				{% if messages %}
 					<ul class="messages">
@@ -34,6 +34,7 @@
 				{% form form=form %}
 					 {% part form.webmail prefix %}<i class="material-icons prefix">account_box</i>{% endpart %}
 					 {% part form.password prefix %}<i class="material-icons prefix">lock_open</i>{% endpart %}
+					 {% part form.mail_server prefix %}<i class="material-icons prefix">email</i>{% endpart %}
 				{% endform %}
 				<button type="submit" name="_submit" class="btn btn-primary btn-lg">Submit</button>
 			</div>

@@ -10,16 +10,16 @@ from .managers import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
     WEBMAIL_SERVERS = [
+    ('202.141.80.13', 'Dikrong'),
+    ('202.141.80.12', 'Teesta'),
     ('202.141.80.9', 'Namboor'),
     ('202.141.80.10', 'Disang'),
     ('202.141.80.11', 'Tamdil'),
-    ('202.141.80.12', 'Teesta'),
-    ('202.141.80.13', 'Dikrong'),
     ]
     webmail = models.EmailField(_('webmail address'), unique=True)
     mail_server = models.CharField(_('mail server'), max_length=50, choices=WEBMAIL_SERVERS)
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    first_name = models.CharField(_('first name'), max_length=50, blank=True)
+    last_name = models.CharField(_('last name'), max_length=50, blank=True)
     is_staff = models.BooleanField(_('staff status'), default=False)
     is_active = models.BooleanField(_('active'), default=True)
 
@@ -46,9 +46,21 @@ class User(AbstractBaseUser, PermissionsMixin):
         '''
         return self.first_name
 
-    def save(self, *args, **kwargs):
+    def clean(self):
+        '''
+        Make sure webmail isnt duplicated
+        I shouldnt be able to create two users, 
+        one with webmail "user" and other with webmail "user@iitg.ernet.in"
+        The simplest way to ensure is by removing "@iitg.ernet.in" before saving
+        '''
+        self.webmail = self.webmail.split('@')[0]
+
         '''
         We dont want users to have usable passwords, since we want to use WebmailAuthenticationBackend
         '''
         self.set_unusable_password()
+
+
+    def save(self, *args, **kwargs):
+        self.clean() # Do some custom checks
         super(User, self).save(*args, **kwargs) # Call the "real" save() method.
