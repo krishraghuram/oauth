@@ -6,19 +6,28 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<title>{% block title %}{% endblock %}</title>
+	
 	<!-- Stylesheets -->
 	{% include 'material/includes/material_css.html' %}
 	{% block css %}{% endblock %}
+	<style type="text/css">
+		html, body {
+			background: #eee;
+			height: 100%;
+		}
+	</style>
+	
 	<!-- Javascript -->
-    <script src="{% static 'material/js/jquery.js' %}"></script>
-    {% include 'material/includes/material_js.html' %}
+	<script src="{% static 'material/js/jquery.js' %}"></script>
+	{% include 'material/includes/material_js.html' %}
 	{% block js %}{% endblock %}
 </head>
 
-<body>
+<body class="valign-wrapper2">
+	{% block messages %}{% endblock %}
 	{% block content %}{% endblock %}
 </body>
 </html>

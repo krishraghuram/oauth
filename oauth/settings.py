@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'oauth2_provider',
     'material',
+    'material.frontend',
+    'material.admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
