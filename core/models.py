@@ -7,7 +7,6 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from .managers import UserManager
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     WEBMAIL_SERVERS = [
     ('202.141.80.13', 'Dikrong'),
@@ -62,5 +61,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
     def save(self, *args, **kwargs):
+        '''
+        Its preferred to call self.full_clean()
+        But that returns ValidationError
+        {'webmail': [u'Enter a valid email address.'], 'password': [u'This field cannot be blank.']}
+        Because we do webmail.split('@')[0] and we leave password empty.
+        Thats why we call self.clean()
+        '''
         self.clean() # Do some custom checks
         super(User, self).save(*args, **kwargs) # Call the "real" save() method.
