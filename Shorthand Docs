@@ -1,0 +1,86 @@
+Shorthand Docs
+
+Views
+	LoginView
+		Works with LoginForm and login.html
+		get()
+			if user is already logged in, 
+				redirect to login_success url
+			else(if user not logged in),
+				create an unbound LoginForm and render it using login.html
+
+		post()
+			if user is already logged in, 
+				redirect to url login_success url
+			else(if user not logged in),
+				create a form object using the POST data.
+				if the form is valid, 
+					try 
+						to get the user object from webmail
+					DoesNotExist 
+						send a error message "Are you a new user? Please sign up." and redirect to signup url
+					try 
+						to authenticate the user
+						if user exists, log the user in and redirect to login_success url
+						else, send and error message "Authentication Failed. Try again later." and redirect back to login
+					poplib.error_proto, socket.error
+						get the error message
+						if message is "-ERR Authentication failed." or "-ERR EOF" - change message to "Username or Password Incorrect"
+						if message is "timed out" - change message to "Connection Timed Out. Try Again Later."
+						send message as error message
+						redirect to login url
+				else(if the form is not valid),
+					render the form using login.html, and it will display why the form is not valid
+
+	SignupView
+		Works with SignupForm and signup.html
+		get()
+			create an unbound SignupForm and render it using signup.html
+
+		post()
+			create a form object using the POST data.
+			if the form is valid, 
+				try	
+					to create user object with given webmail, mail_server, first_name and last_name and save it to database
+					try 
+						to authenticate the new user(to verify the password)
+						if user exists, redirect to signup_success url
+					poplib.error_proto, socket.error
+						delete the new user from database
+						get the error message
+						if message is "-ERR Authentication failed." or "-ERR EOF" - change message to "Username or Password Incorrect"
+						if message is "timed out" - change message to "Connection Timed Out. Try Again Later."
+						send message as error message
+						redirect to signup url
+					Exception
+						delete the new user from database
+						send message as error message
+						redirect to signup url
+				django.db.IntegrityError
+					send error message "User with given webmail already exists"
+					redirect to signup url
+			else(if the form is not valid),
+				render the form using signup.html, and it will display why the form is not valid
+
+
+	LogoutView
+		get()
+			logout the user
+			send an error message "You have been logged out. Login again to continue."
+			redirect to login url
+
+	LoginSuccessView
+		get()
+			time.sleep for a second
+			if user is logged in
+				send a info message, "You are logged in as <user>"
+				render login_success.html
+			else(if user is not logged in),
+				render login_success.html with the text "You are not logged in. Redirecting to login page." and url of 'login' as context variables
+
+	SignupSuccessView
+		get()
+			time.sleep for one second
+			render signup_success.html
+
+
