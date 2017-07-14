@@ -44,17 +44,6 @@ class LoginView(View):
 					#Redirect to Sign Up Page with a message
 					messages.error(request, "Are you a new user? Please sign up.")
 					return HttpResponseRedirect(reverse('signup'))
-					#Todo Cleanup
-					# s = '''
-					# <html><body style="text-align:center"><h1>
-					# <br/><br/><br/><br/><br/><br/><br/><br/>
-					# Is this your first time?
-					# </h1></body></html>
-					# '''
-					# return HttpResponse(s)
-					# s = "Username or Password Incorrect"
-					# messages.error(request, s)
-					# return HttpResponseRedirect(reverse('login'))
 				
 				#Authenticate
 				try:
@@ -106,7 +95,9 @@ class SignupView(View):
 				get_user_model()(webmail=webmail, mail_server=mail_server, first_name=first_name, last_name=last_name).save()
 				new_user = get_user_model().objects.get(webmail__contains=webmail)
 				try: 
-					user = authenticate(request, webmail=webmail, mail_server=mail_server, password=password)
+					user = authenticate(request, webmail=new_user.webmail, mail_server=new_user.mail_server, password=password)
+					# Using new_user.webmail expresses the intent of the code more clearly than below way of calling authenticate
+					# user = authenticate(request, webmail=webmail, mail_server=mail_server, password=password)
 					if user is not None:
 						# Redirect to signup_success
 						return HttpResponseRedirect(reverse('signup_success'))
@@ -144,6 +135,7 @@ class LogoutView(View):
 
 class LoginSuccessView(View):
 	def get(self, request, *args, **kwargs):
+		# Todo Cleanup
 		# if request.user.is_authenticated:
 		# 	redirect_to = request.GET.get('next') #What if there is no next?
 		# 	user = request.user.get_short_name()
@@ -166,4 +158,6 @@ class LoginSuccessView(View):
 class SignupSuccessView(View):
 	def get(self, request, *args, **kwargs):
 		time.sleep(1)
+		#There is javascript in signup_success.html which,
+		#Will redirect to login
 		return render(request, 'testoauth/signup_success.html')
