@@ -14,16 +14,12 @@ class WebmailAuthenticationBackend(object):
 
     def authenticate(self, request, **credentials):
         socket.setdefaulttimeout(5)
-        # Todo Cleanup
-        # No need to sanitize anymore, since forms sanitize all user input data.
         webmail = credentials.get('webmail')
         password = credentials.get('password')
         mail_server = credentials.get('mail_server')
 
         user_model = get_user_model()
         try:
-            # Todo Cleanup
-            # No need to use contains anymore, since forms sanitize all user input data.
             kw = {user_model.USERNAME_FIELD : webmail}
             user = user_model.objects.get(**kw) 
         except user_model.DoesNotExist:

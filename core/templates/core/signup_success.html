@@ -1,19 +1,17 @@
-{% extends "testoauth/base.html" %}
+{% extends "core/base.html" %}
 
 {% load material_form %} 
 
-{% block title %}Login Success{% endblock %}
+{% block title %}Signup Success{% endblock %}
 
 {% block css %}{% endblock %}
 
 {% block js %}
-	{% if next %}
-		<script type="text/javascript">
-			$( document ).ready(function() {
-				setTimeout(function(){ window.location.href="{{ next }}" }, 2500);
-			});
-		</script>
-	{% endif %} 
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			setTimeout(function(){ window.location.href="{% url 'login' %}" }, 3000);
+		});
+	</script>
 {% endblock %}
 
 {% block messages %}
@@ -27,16 +25,12 @@
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <div class="card">
 		<form method="POST" class="viewform">
-			<div class="card-content" style="text-align:center;">
-				<span><!-- Empty Span to even the vertical spacing --></span>
+			<div class="card-content">
+				<span class="card-content"><!-- Empty Span to even the vertical spacing --></span>
 				<span class="card-title grey-text text-darken-2" style="font-size:3rem;font-weight:200;text-align:center;">
-				{% if text %}
-					{{text}}
-				{% else %}
-					Login Successful.
-				{% endif %}
+					Signup Successful. Redirecting.
 				</span>
-				<span class="card-content" style="text-align:center;">
+				<span class="card-content">
 				{% if messages %}
 					<ul class="messages">
 						{% for message in messages %}
@@ -44,9 +38,6 @@
 						{% endfor %}
 					</ul>
 				{% endif %}
-				</span>
-				<span class="card-content">
-					<a class="waves-effect waves-light btn blue-grey lighten-5 blue-grey-text text-darken-4" href="{% url 'logout' %}">Log out</a>
 				</span>
 			</div>
 		</form>	

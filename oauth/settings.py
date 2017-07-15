@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'testoauth.apps.TestoauthConfig',
     'core.apps.CoreConfig',
     'oauth2_provider',
     'material',

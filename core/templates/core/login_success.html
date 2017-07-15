@@ -1,0 +1,57 @@
+{% extends "core/base.html" %}
+
+{% load material_form %} 
+
+{% block title %}Login Success{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block js %}
+	{% if next %}
+		<script type="text/javascript">
+			$( document ).ready(function() {
+				setTimeout(function(){ window.location.href="{{ next }}" }, 2500);
+			});
+		</script>
+	{% endif %} 
+{% endblock %}
+
+{% block messages %}
+
+{% endblock %}
+
+{% block content %}
+	<div class="container expand-on-small-only">
+	<div class="row valign change-form">
+    <div class="col s12 m10 offset-m1 l10 offset-l1">
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <div class="card">
+		<form method="POST" class="viewform">
+			<div class="card-content" style="text-align:center;">
+				<span><!-- Empty Span to even the vertical spacing --></span>
+				<span class="card-title grey-text text-darken-2" style="font-size:3rem;font-weight:200;text-align:center;">
+				{% if text %}
+					{{text}}
+				{% else %}
+					Login Successful.
+				{% endif %}
+				</span>
+				<span class="card-content" style="text-align:center;">
+				{% if messages %}
+					<ul class="messages">
+						{% for message in messages %}
+							<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+				</span>
+				<span class="card-content">
+					<a class="waves-effect waves-light btn blue-grey lighten-5 blue-grey-text text-darken-4" href="{% url 'logout' %}">Log out</a>
+				</span>
+			</div>
+		</form>	
+	</div>
+	</div>
+	</div>
+	</div>
+{% endblock %}
