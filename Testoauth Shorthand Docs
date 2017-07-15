@@ -70,7 +70,11 @@ Views
 	SignupView
 		Works with SignupForm and signup.html
 		get()
-			create an unbound SignupForm and render it using signup.html
+			if someone is logged in,
+				send a message that new user cannot sign up when someone is logged in and
+				redirect to login_success
+			else,
+				create an unbound SignupForm and render it using signup.html
 
 		post()
 			create a form object using the POST data.

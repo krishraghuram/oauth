@@ -76,8 +76,21 @@ class SignupView(View):
 	template_name = 'testoauth/signup.html'
 
 	def get(self, request, *args, **kwargs):
-		form = self.form_class(initial=self.initial)
-		return render(request, self.template_name, {'form':form})
+		# Todo Cleanup
+		# If someone is logged in, ask him to logout before a new user can signup.
+		# Feels like a good security practice.
+		# This is also better UX
+		# If Y signs up while X is logged in,
+		# When signup_success redirects Y to login page,
+		# login will redirect to login_success page with message "You are logged in as X"
+		# This will be extremely confusing for Y
+		if request.user.is_authenticated:
+			messages.error(request, "Signup is disabled when someone is logged in. Please logout.")
+			return HttpResponseRedirect(reverse('login_success'))
+
+		else: #If nobody is logged in, render the form
+			form = self.form_class(initial=self.initial)
+			return render(request, self.template_name, {'form':form})
 
 	def post(self, request, *args, **kwargs):
 		form = self.form_class(request.POST)
