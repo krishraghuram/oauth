@@ -39,7 +39,7 @@ class LoginView(View):
 
 				#Get user object
 				try:
-					user = get_user_model().objects.get(webmail__contains=webmail)
+					user = get_user_model().objects.get(webmail=webmail)
 				except get_user_model().DoesNotExist: #New User
 					#Redirect to Sign Up Page with a message
 					messages.error(request, "Are you a new user? Please sign up.")
@@ -93,7 +93,7 @@ class SignupView(View):
 			try:
 				# The below syntax might look funny but its perfectly correct
 				get_user_model()(webmail=webmail, mail_server=mail_server, first_name=first_name, last_name=last_name).save()
-				new_user = get_user_model().objects.get(webmail__contains=webmail)
+				new_user = get_user_model().objects.get(webmail=webmail)
 				try: 
 					user = authenticate(request, webmail=new_user.webmail, mail_server=new_user.mail_server, password=password)
 					# Using new_user.webmail expresses the intent of the code more clearly than below way of calling authenticate
