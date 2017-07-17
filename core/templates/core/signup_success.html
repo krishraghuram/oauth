@@ -9,7 +9,7 @@
 {% block js %}
 	<script type="text/javascript">
 		$( document ).ready(function() {
-			setTimeout(function(){ window.location.href="{% url 'login' %}" }, 3000);
+			setTimeout(function(){ window.location.href="{% url 'core:login' %}" }, 3000);
 		});
 	</script>
 {% endblock %}

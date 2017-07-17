@@ -140,4 +140,4 @@ AUTHENTICATION_BACKENDS = [
     'core.auth.WebmailAuthenticationBackend',
     # 'django.contrib.auth.backends.ModelBackend',
 ]
-LOGIN_URL = '/testoauth/login/'
+LOGIN_URL = '/core/login/'
