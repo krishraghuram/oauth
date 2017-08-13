@@ -27,12 +27,10 @@ class WebmailAuthenticationBackend(object):
             return None 
 
         try:
-            # conn = poplib.POP3_SSL(host=mail_server, port=poplib.POP3_SSL_PORT)
-            # conn.user(webmail)
-            # if 'OK' in conn.pass_(password):
-            #     conn.quit()
-            #     return user
-            if password=="password":
+            conn = poplib.POP3_SSL(host=mail_server, port=poplib.POP3_SSL_PORT)
+            conn.user(webmail)
+            if 'OK' in conn.pass_(password):
+                conn.quit()
                 return user
             else:
                 raise poplib.error_proto("-ERR Authentication failed.")
